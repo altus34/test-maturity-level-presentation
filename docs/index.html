@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Studio</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Les Niveaux de maturité de Tests</h1>
+            <aside class="notes">
+                Richardson Maturity Model
+            </aside>
+        </section>
+        <section>
+            <section data-markdown>
+                <textarea data-template>
+                    > "My philosophy is to test as little as possible to reach a given level of confidence."
+
+                    Ken Beck.
+                </textarea>
+            </section>
+            <section>
+                <h2>Mais</h2>
+                <p class="fragment">Ce niveau de confiance a un coût</p>
+                <p class="fragment fade-up">Toute ligne de code écrite doit être maintenue</p>
+            </section>
+            <section>
+                <h2>On veut optimiser le R.O.I.</h2>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h2>The Pyramid of tests</h2>
+            </section>
+            <section>
+                <img src="images/traditional-pyramid.png">
+                <p>By Mike Cohn</p>
+                <aside class="notes">
+                    <p>
+                        Write tests with different granularity
+                    </p>
+                    <p>
+                        The more high-level you get the fewer tests you should have
+                    </p>
+                    <p>Unfortunately the concept of the test pyramid falls a little short if you take a closer look</p>
+                    <p>Du coup on trouve beaucoup de versions alternatives comme...</p>
+                </aside>
+            </section>
+            <section>
+                <img src="images/pyramid_1.png">
+            </section>
+            <section>
+                <img src="images/pyramid_2.png">
+            </section>
+            <section>
+                <img src="images/google.jpg">
+                <aside class="notes">
+                    <p>pragmatic</p>
+                    <p>Juste une différentiation slow/fast</p>
+                    <p>équipes très compétentes</p>
+                </aside>
+            </section>
+            <section>
+                <p class="fragment">Ce qui est important c'est la distance du test !!!</p>
+                <p class="fragment fade-up">On veut une boucle de rétroaction (feedback loop) courte</p>
+                <p class="fragment fade-up">T@#$%$NAC de quoi il parle lui !!!</p>
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h3>Rappels</h3>
+                <p class="fragment">On teste par intention</p>
+                <p class="fragment fade-up">On teste TOUJOURS en blackbox</p>
+                <p class="fragment fade-up">
+                    <a href="http://shoulditestprivatemethods.com/">Dois-je tester mes méthodes privées ?</a>
+                </p>
+            </section>
+        </section>
+
+        <section>
+            <h3>Il n'y a que 3 niveaux de tests</h3>
+            <p class="fragment">Technique</p>
+            <p class="fragment fade-up">Métier/Business</p>
+            <p class="fragment fade-up">Fonctionnel</p>
+        </section>
+
+        <section>
+            <section>
+                <img src="images/boundary_1.png" style="width: 50%">
+                <aside class="notes">
+                    <ul>
+                        <li>Ici 2 niveaux de test Techique et Business</li>
+                        <li>Exemple typique d'un module applicatif ou d'un microservice</li>
+                        <li>L'approche microservice nous permet de faire des choses qu'on ne ferait pas dans le cadre
+                            d'un monolithique
+                        </li>
+                        <li>Bleu partie interne</li>
+                        <li>Vert client</li>
+                        <li>Rose providers externes</li>
+                    </ul>
+                    <p>À noter qu'au début on n'avait pas d'ORM</p>
+                    <ul>
+                        <li>Tester la partie bleue: facile -> in process isolation modularité.
+                            <p>Dans ce cas-là, le test unitaire est un test de modularité. Importance du TDD pour bien
+                                coder cette partie</p>
+                        </li>
+                    </ul>
+
+                </aside>
+            </section>
+            <section>
+                <img src="images/tests_mockmvc_wm-1024.webp">
+                <aside class="notes">
+                    <p>Le plus rapide mais pas la réalité + configuration spécifique au test</p>
+                    <p>distance du test importante</p>
+                </aside>
+            </section>
+            <section>
+                <img src="images/tests_mockmvc_with_context_wm-1024.webp">
+                <aside class="notes">
+                    <p>Moins rapide mais plus proche de la réalité + configuration moindre</p>
+                    <p>distance du test moyenne</p>
+                </aside>
+            </section>
+            <section>
+                <img src="images/tests_springboot_wm-1-1024.webp">
+                <aside class="notes">
+                    <p>Le plus lent mais très proche de la réalité + conf == celle de prod + vrai web serveur et donc
+                        couche réseau</p>
+                    <p>La distance du test petite tout en maintenant une feedbackloop courte</p>
+                    <p>R.O.I. le meilleur</p>
+                </aside>
+            </section>
+        </section>
+        <section>
+            <section>
+                <img src="images/boundary_1.png" style="width: 50%">
+                <aside class="notes">
+                    <p>On va regarder maintenant les tests tecnhiques aux frontières sortantes</p>
+                </aside>
+            </section>
+            <section>
+                <img src="images/boundary_2.png" style="width: 50%">
+                <aside class="notes">
+                    <ul>
+                        <li>Sortante dont on est pas propriétaire</li>
+                        <li>Sortante dont on est propriétaire</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <img src="images/boundary_3.png" style="width: 50%">
+                <aside class="notes">
+                    <ul>
+                        <li>In-process approche</li>
+                        <li>REST pas vraiment le réseau donc pas possible de tester la latence réseau ou échec de
+                            connection (Circuit Breaker)
+                        </li>
+                        <li>DB in memory mais pas réalité</li>
+                        <li>Quick mais la distance du test moyenne</li>
+                    </ul>
+                </aside>
+            </section>
+            <section>
+                <img src="images/boundary_4.png" style="width: 50%">
+            </section>
+            <section>
+                <img src="images/test-container.png">
+            </section>
+            <section>
+                <img src="images/CircleCI.png">
+            </section>
+        </section>
+        <section>
+            <section>
+                <img src="images/boundary_1.png" style="width: 50%">
+                <aside class="notes">
+                    <p>Les test Business</p>
+                    <aside class="notes">
+                        <p>Introduction ici du niveau de language</p>
+                        <p>technique: dev <-> dev</p>
+                        <p>business: dev <-> business analyst</p>
+                        <p>fonctionnel: dev <-> user - UI/UX</p>
+                    </aside>
+                </aside>
+            </section>
+            <section>
+                <h3>Cucumber</h3>
+                <img src="images/cucumber-open-icon.svg">
+            </section>
+            <section>
+                <img src="images/periode-d-amortissement-exemple.jpg">
+            </section>
+        </section>
+
+        <section>
+            <section>
+                <h3>Les tests fonctionnels</h3>
+                <p class="fragment">Majoritairement UI</p>
+                <p class="fragment fade-up">Les plus complexes</p>
+            </section>
+            <section>
+                <p class="fragment fade-up">1 - Write as few end-to-end tests as possible</p>
+                <p class="fragment fade-up">2 - Focus on personas and user journeys</p>
+                <p class="fragment fade-up">3 - Choose your ends wisely</p>
+                <p class="fragment fade-up">4 - Rely on infrastructure-as-code for repeatability</p>
+                <p class="fragment fade-up">5 - Make tests data-independent</p>
+
+                <aside class="notes">
+                    <p>Si on veut une faible distance c'est très couteux</p>
+                    <p>Dans ce cas la on va mettre en place du Stubing</p>
+                </aside>
+
+            </section>
+        </section>
+        <section>
+            <section>
+                <h3>Il faut respecter les niveaux de communication</h3>
+                <p class="fragment fade-up">Le test == documentation</p>
+                <p class="fragment fade-up">Executable documentation</p>
+                <p class="fragment fade-up">Documentation as code</p>
+                <p class="fragment fade-up">Exemple</p>
+            </section>
+        </section>
+
+        <section>
+            <h1>To BE CONTINUED...</h1>
+        </section>
+
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true,
+                callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>
